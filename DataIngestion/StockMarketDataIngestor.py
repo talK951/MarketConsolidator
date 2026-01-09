@@ -8,18 +8,14 @@ class StockMarketDataIngestor:
         self.api_key = api_key
         self.url = "https://financialmodelingprep.com/stable/"
 
-    # -------------------------
-    # Internal helper
-    # -------------------------
+
     def _get(self, endpoint: str, params: dict):
         params["apikey"] = self.api_key
         resp = requests.get(self.url + endpoint, params=params, timeout=10)
         resp.raise_for_status()
         return resp.json()
 
-    # -------------------------
-    # Financial Statements
-    # -------------------------
+
     def get_income_statement(self, symbol: str, period: str, limit: int):
         return self._get(
             "income-statement",
@@ -38,9 +34,6 @@ class StockMarketDataIngestor:
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    # -------------------------
-    # Financial Ratios
-    # -------------------------
     def get_financial_ratios(self, symbol: str, period: str, limit: int):
         """
         Liquidity, profitability, efficiency, leverage ratios:
@@ -54,9 +47,6 @@ class StockMarketDataIngestor:
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    # -------------------------
-    # Key Metrics
-    # -------------------------
     def get_key_metrics(self, symbol: str, period: str, limit: int):
         """
         High-signal metrics for dashboards:
@@ -70,9 +60,6 @@ class StockMarketDataIngestor:
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    # -------------------------
-    # Growth Metrics
-    # -------------------------
     def get_financial_growth(self, symbol: str, period: str, limit: int):
         """
         Growth rates:
@@ -86,9 +73,6 @@ class StockMarketDataIngestor:
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    # -------------------------
-    # Valuation & Enterprise Value
-    # -------------------------
     def get_enterprise_values(self, symbol: str, period: str, limit: int):
         """
         Enterprise value & valuation multiples:
@@ -101,9 +85,6 @@ class StockMarketDataIngestor:
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    # -------------------------
-    # Market Data
-    # -------------------------
     def get_quote(self, symbol: str):
         """
         Real-time-ish market snapshot:
@@ -132,9 +113,6 @@ class StockMarketDataIngestor:
             {"symbol": symbol},
         )
 
-    # -------------------------
-    # Historical Price Data (Chart API)
-    # -------------------------
     def get_historical_price_chart(
             self,
             symbol: str,
