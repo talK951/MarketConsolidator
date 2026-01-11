@@ -46,3 +46,5 @@ htmlcov/
 
 # Misc
 *.DS_Store
+
+sandbox/
