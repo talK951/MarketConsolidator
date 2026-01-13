@@ -9,32 +9,32 @@ class StockMarketDataIngestor:
         self.url = "https://financialmodelingprep.com/stable/"
 
 
-    def _get(self, endpoint: str, params: dict):
+    def _get(self, endpoint: str, params: dict) -> dict:
         params["apikey"] = self.api_key
         resp = requests.get(self.url + endpoint, params=params, timeout=10)
         resp.raise_for_status()
         return resp.json()
 
 
-    def get_income_statement(self, symbol: str, period: str, limit: int):
+    async def get_income_statement(self, symbol: str, period: str, limit: int)-> dict:
         return self._get(
             "income-statement",
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    def get_balance_sheet_statement(self, symbol: str, period: str, limit: int):
+    async def get_balance_sheet_statement(self, symbol: str, period: str, limit: int)-> dict:
         return self._get(
             "balance-sheet-statement",
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    def get_cash_flow_statement(self, symbol: str, period: str, limit: int):
+    async def get_cash_flow_statement(self, symbol: str, period: str, limit: int)-> dict:
         return self._get(
             "cash-flow-statement",
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    def get_financial_ratios(self, symbol: str, period: str, limit: int):
+    async def get_financial_ratios(self, symbol: str, period: str, limit: int)-> dict:
         """
         Liquidity, profitability, efficiency, leverage ratios:
         - Current ratio
@@ -47,7 +47,7 @@ class StockMarketDataIngestor:
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    def get_key_metrics(self, symbol: str, period: str, limit: int):
+    async def get_key_metrics(self, symbol: str, period: str, limit: int)-> dict:
         """
         High-signal metrics for dashboards:
         - EPS, book value per share
@@ -60,7 +60,7 @@ class StockMarketDataIngestor:
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    def get_financial_growth(self, symbol: str, period: str, limit: int):
+    async def get_financial_growth(self, symbol: str, period: str, limit: int)-> dict:
         """
         Growth rates:
         - Revenue growth
@@ -73,7 +73,7 @@ class StockMarketDataIngestor:
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    def get_enterprise_values(self, symbol: str, period: str, limit: int):
+    async def get_enterprise_values(self, symbol: str, period: str, limit: int)-> dict:
         """
         Enterprise value & valuation multiples:
         - EV
@@ -85,7 +85,7 @@ class StockMarketDataIngestor:
             {"symbol": symbol, "period": period, "limit": limit},
         )
 
-    def get_quote(self, symbol: str):
+    async def get_quote(self, symbol: str) -> dict:
         """
         Real-time-ish market snapshot:
         - Price
@@ -99,7 +99,7 @@ class StockMarketDataIngestor:
             {"symbol": symbol},
         )
 
-    def get_company_profile(self, symbol: str):
+    async def get_company_profile(self, symbol: str) -> dict:
         """
         Static company info:
         - Sector
@@ -113,13 +113,13 @@ class StockMarketDataIngestor:
             {"symbol": symbol},
         )
 
-    def get_historical_price_chart(
+    async def get_historical_price_chart(
             self,
             symbol: str,
             timeframe: str,
             from_date: Optional[str] = None,
             to_date: Optional[str] = None,
-    ):
+    ) -> dict:
         """
         timeframe examples:
         - 1min, 5min, 15min, 1hour
