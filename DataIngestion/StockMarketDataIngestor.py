@@ -1,3 +1,4 @@
+import json
 from typing import Optional
 
 import requests
@@ -7,6 +8,8 @@ class StockMarketDataIngestor:
     def __init__(self, api_key: str) -> None:
         self.api_key = api_key
         self.url = "https://financialmodelingprep.com/stable/"
+        with open("C:\\Users\\user\\Desktop\\BuildMore\\CompanyEvaluationDashboard\\testing\\mock_api_data.json", "r") as f:
+            self.mock_data = json.load(f)
 
 
     def _get(self, endpoint: str, params: dict) -> dict:
@@ -14,25 +17,31 @@ class StockMarketDataIngestor:
         resp = requests.get(self.url + endpoint, params=params, timeout=10)
         resp.raise_for_status()
         return resp.json()
+    
+    def get_mock_data(self, endpoint: str) -> dict:
+        return self.mock_data[endpoint]
 
 
     async def get_income_statement(self, symbol: str, period: str, limit: int)-> dict:
-        return self._get(
+        return self.get_mock_data(endpoint="income-statement")
+        """return self._get(
             "income-statement",
             {"symbol": symbol, "period": period, "limit": limit},
-        )
+        )"""
 
     async def get_balance_sheet_statement(self, symbol: str, period: str, limit: int)-> dict:
-        return self._get(
+        return self.get_mock_data(endpoint="balance-sheet-statement")
+        """return self._get(
             "balance-sheet-statement",
             {"symbol": symbol, "period": period, "limit": limit},
-        )
+        )"""
 
     async def get_cash_flow_statement(self, symbol: str, period: str, limit: int)-> dict:
-        return self._get(
+        return self.get_mock_data(endpoint="cash-flow-statement")
+        """return self._get(
             "cash-flow-statement",
             {"symbol": symbol, "period": period, "limit": limit},
-        )
+        )"""
 
     async def get_financial_ratios(self, symbol: str, period: str, limit: int)-> dict:
         """
@@ -42,10 +51,11 @@ class StockMarketDataIngestor:
         - Gross / operating / net margins
         - Debt ratios
         """
-        return self._get(
+        return self.get_mock_data(endpoint="ratios")
+        """return self._get(
             "ratios",
             {"symbol": symbol, "period": period, "limit": limit},
-        )
+        )"""
 
     async def get_key_metrics(self, symbol: str, period: str, limit: int)-> dict:
         """
@@ -55,10 +65,11 @@ class StockMarketDataIngestor:
         - ROIC, ROE
         - Revenue per share
         """
-        return self._get(
+        return self.get_mock_data(endpoint="key-metrics")
+        """return self._get(
             "key-metrics",
             {"symbol": symbol, "period": period, "limit": limit},
-        )
+        )"""
 
     async def get_financial_growth(self, symbol: str, period: str, limit: int)-> dict:
         """
@@ -68,10 +79,11 @@ class StockMarketDataIngestor:
         - FCF growth
         - Net income growth
         """
-        return self._get(
+        return self.get_mock_data(endpoint="financial-growth")
+        """return self._get(
             "financial-growth",
             {"symbol": symbol, "period": period, "limit": limit},
-        )
+        )"""
 
     async def get_enterprise_values(self, symbol: str, period: str, limit: int)-> dict:
         """
@@ -80,10 +92,11 @@ class StockMarketDataIngestor:
         - EV / EBITDA
         - EV / Revenue
         """
-        return self._get(
+        return self.get_mock_data(endpoint="enterprise-values")
+        """return self._get(
             "enterprise-values",
             {"symbol": symbol, "period": period, "limit": limit},
-        )
+        )"""
 
     async def get_quote(self, symbol: str) -> dict:
         """

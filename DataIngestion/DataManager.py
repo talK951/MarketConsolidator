@@ -1,3 +1,4 @@
+import json
 from typing import List, Callable, Optional
 import psycopg2
 import os
@@ -48,7 +49,8 @@ class DataManager:
     async def get_company_data_with_error_handling(self, func: Callable, company: str, period: int) -> Optional[dict]:
         try:
             return await func(company, period, limit=1)
-        except:
+        except Exception as e:
+            print(f"Ingestion error: {type(e).__name__}: {e}")
             return None
     
     async def get_current_year_market_data(self):
@@ -80,12 +82,15 @@ class DataManager:
                     "financial_growth": financial_growth,
                     "enterprise_values": enterprise_values,
                 }
-            years_data[datetime.year] = period_data
+            years_data[datetime.now().year] = period_data
             market_data[company] = years_data
         return market_data
 
 
     async def ingest_data(self):
         market_data = await self.get_current_year_market_data()
+        with open("output.txt", "w") as f:
+            json.dump(market_data, f, indent=2)
         print(market_data)
+        
         return
