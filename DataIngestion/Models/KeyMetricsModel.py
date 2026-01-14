@@ -1,0 +1,52 @@
+from pydantic import BaseModel
+from typing import List
+from datetime import date
+
+class KeyMetric(BaseModel):
+    symbol: str
+    date: date
+    fiscalYear: str
+    period: str
+    reportedCurrency: str
+    marketCap: int
+    enterpriseValue: int
+    evToSales: float
+    evToOperatingCashFlow: float
+    evToFreeCashFlow: float
+    evToEBITDA: float
+    netDebtToEBITDA: float
+    currentRatio: float
+    incomeQuality: float
+    grahamNumber: float
+    grahamNetNet: float
+    taxBurden: float
+    interestBurden: float
+    workingCapital: int
+    investedCapital: int
+    returnOnAssets: float
+    operatingReturnOnAssets: float
+    returnOnTangibleAssets: float
+    returnOnEquity: float
+    returnOnInvestedCapital: float
+    returnOnCapitalEmployed: float
+    earningsYield: float
+    freeCashFlowYield: float
+    capexToOperatingCashFlow: float
+    capexToDepreciation: float
+    capexToRevenue: float
+    salesGeneralAndAdministrativeToRevenue: float
+    researchAndDevelopementToRevenue: float
+    stockBasedCompensationToRevenue: float
+    intangiblesToTotalAssets: float
+    averageReceivables: int
+    averagePayables: int
+    averageInventory: int
+    daysOfSalesOutstanding: float
+    daysOfPayablesOutstanding: float
+    daysOfInventoryOutstanding: float
+    operatingCycle: float
+    cashConversionCycle: float
+    freeCashFlowToEquity: int
+    freeCashFlowToFirm: float
+    tangibleAssetValue: int
+    netCurrentAssetValue: int
